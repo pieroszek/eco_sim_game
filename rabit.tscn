@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://oj1rekv6jbej"]
+
+[ext_resource type="Script" uid="uid://cnsk1j1th5kpc" path="res://rabit.gd" id="1_71k35"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_dxn2u"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yvmlu"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_rcvye"]
+
+[node name="rabit" type="CharacterBody3D" unique_id=570763657 groups=["prey"]]
+script = ExtResource("1_71k35")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=748499245]
+mesh = SubResource("BoxMesh_dxn2u")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1020134807]
+shape = SubResource("BoxShape3D_yvmlu")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1139606105]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1188033099]
+shape = SubResource("SphereShape3D_rcvye")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1953946247]

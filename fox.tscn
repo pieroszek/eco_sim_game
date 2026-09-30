@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://ccbkja2atbjub"]
+
+[ext_resource type="Script" uid="uid://dejs7t41nst3m" path="res://fox.gd" id="1_8x0u3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_706rl"]
+albedo_color = Color(0.9999854, 0.3485666, 0.19322279, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kpck0"]
+material = SubResource("StandardMaterial3D_706rl")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8x0u3"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_706rl"]
+
+[node name="fox" type="CharacterBody3D" unique_id=1188091251]
+script = ExtResource("1_8x0u3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1491028719]
+mesh = SubResource("BoxMesh_kpck0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1147448100]
+shape = SubResource("BoxShape3D_8x0u3")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=2081160655]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=2071990863]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+shape = SubResource("SphereShape3D_706rl")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1860589628]
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

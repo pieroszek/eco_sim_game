@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://duf50l6lwkrqo"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yvmlu"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ha7c5"]
+
+[node name="tile" type="Node3D" unique_id=1236646472]
+
+[node name="water" type="StaticBody3D" parent="." unique_id=1404434611]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.125645, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="water" unique_id=646257531]
+shape = SubResource("BoxShape3D_yvmlu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="water" unique_id=255923]
+mesh = SubResource("BoxMesh_ha7c5")
+
+[node name="dirt" type="StaticBody3D" parent="." unique_id=1824075986]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.3969374)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="dirt" unique_id=1060301356]
+shape = SubResource("BoxShape3D_yvmlu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="dirt" unique_id=1730153790]
+mesh = SubResource("BoxMesh_ha7c5")
+
+[node name="sand" type="StaticBody3D" parent="." unique_id=973883916]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.6732032)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="sand" unique_id=933136952]
+shape = SubResource("BoxShape3D_yvmlu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="sand" unique_id=1025328456]
+mesh = SubResource("BoxMesh_ha7c5")
+
+[node name="grass" type="StaticBody3D" parent="." unique_id=394844270]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5759892, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="grass" unique_id=520356803]
+shape = SubResource("BoxShape3D_yvmlu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="grass" unique_id=1408801675]
+mesh = SubResource("BoxMesh_ha7c5")

@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://bnquh3bb60qbh"]
+
+[ext_resource type="Script" uid="uid://c73t0di3hjyyi" path="res://level.gd" id="1_oi3di"]
+[ext_resource type="MeshLibrary" uid="uid://c4bg7h3acbyqq" path="res://tile_mesh_library.tres" id="1_u52ul"]
+[ext_resource type="PackedScene" uid="uid://bywkl4jpwrobu" path="res://player.tscn" id="2_vonw3"]
+
+[node name="Node3D" type="Node3D" unique_id=353086266]
+script = ExtResource("1_oi3di")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=547671422]
+transform = Transform3D(1, 0, 0, 0, 0.9892989, 0.14590324, 0, -0.14590324, 0.9892989, 0, 3.6762109, 0)
+
+[node name="CharacterBody3D" parent="." unique_id=1067922801 instance=ExtResource("2_vonw3")]
+transform = Transform3D(1, 0, 0, 0, 0.7804791, 0.6251819, 0, -0.6251819, 0.7804791, 27.19511, 15.924339, 47.891808)
+
+[node name="GridMap" type="GridMap" parent="." unique_id=1293383532]
+mesh_library = ExtResource("1_u52ul")
+cell_size = Vector3(1, 1, 1)
+
+[node name="Timer" type="Timer" parent="." unique_id=1063338962]
+wait_time = 0.5
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_sim_tick"]

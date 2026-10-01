@@ -7,7 +7,17 @@ const item_sand := 4
 
 
 var tile_data: Dictionary = {}
+var plant_data: Dictionary = {}
 var grid_map: GridMap
+
+class PlantData:
+	var id: int
+	var species: String        # "oak", "pine", "bush"
+	var cell: Vector2i         # which tile it's rooted on
+	var position: Vector3      # exact world position (with jitter)
+	var age: float = 0.0
+	var health: float = 1.0
+	var mesh_instance: Node3D  # reference to the visual node, if spawned
 
 
 var grid_width := 0
@@ -33,3 +43,11 @@ func is_walkable(cell: Vector2i) -> bool:
 	if !is_in_bounds(cell):
 		return false
 	return get_biome(cell) != item_water
+
+func spawn_plant(species: String, cell: Vector2i) -> void:
+	if not is_in_bounds(cell):
+		return
+	if get_biome(cell) == item_water:
+		return  # no trees on water
+	
+	

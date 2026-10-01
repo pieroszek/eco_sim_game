@@ -12,7 +12,9 @@ material = SubResource("StandardMaterial3D_706rl")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_706rl"]
 
-[node name="fox" type="CharacterBody3D" unique_id=1188091251]
+[sub_resource type="SphereShape3D" id="SphereShape3D_yvmlu"]
+
+[node name="fox" type="CharacterBody3D" unique_id=1188091251 groups=["fox", "predator"]]
 script = ExtResource("1_8x0u3")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1491028719]
@@ -21,12 +23,19 @@ mesh = SubResource("BoxMesh_kpck0")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1147448100]
 shape = SubResource("BoxShape3D_8x0u3")
 
-[node name="Area3D" type="Area3D" parent="." unique_id=2081160655]
+[node name="Visibility" type="Area3D" parent="." unique_id=2081160655]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=2071990863]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Visibility" unique_id=2071990863]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
 shape = SubResource("SphereShape3D_706rl")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1860589628]
 
-[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[node name="Attack_radius" type="Area3D" parent="." unique_id=281187096]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Attack_radius" unique_id=1040061344]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+shape = SubResource("SphereShape3D_yvmlu")
+
+[connection signal="body_entered" from="Visibility" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_entered" from="Attack_radius" to="." method="_on_attack_radius_body_entered"]

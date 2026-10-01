@@ -17,9 +17,12 @@ mesh = SubResource("BoxMesh_dxn2u")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1020134807]
 shape = SubResource("BoxShape3D_yvmlu")
 
-[node name="Area3D" type="Area3D" parent="." unique_id=1139606105]
+[node name="Visibility" type="Area3D" parent="." unique_id=1139606105]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1188033099]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Visibility" unique_id=1188033099]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
 shape = SubResource("SphereShape3D_rcvye")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1953946247]
+
+[connection signal="body_entered" from="Visibility" to="." method="_on_area_3d_body_entered"]

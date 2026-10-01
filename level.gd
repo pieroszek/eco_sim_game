@@ -13,17 +13,18 @@ var moisture_noise := FastNoiseLite.new()
 const rabbit_animal_scene := preload("res://rabit.tscn")
 const fox_animal_scene := preload("res://fox.tscn")
 @export var rabbit_spawn_count: int = 10
-@export var fox_spawn_count: int = 3
+@export var fox_spawn_count: int = 1
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	moisture_noise.seed = randi()  # or a fixed seed for reproducibility
 	moisture_noise.noise_type = FastNoiseLite.TYPE_PERLIN
 	moisture_noise.frequency = .07  # lower = smoother, larger features
 	generate_world()
-	spawn_animals()
+	
 	World.grid_map = grid_map
 	World.grid_depth = depth
 	World.grid_width = width
+	spawn_animals()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -92,7 +93,7 @@ func spawn_animals() -> void:
 		var animal := rabbit_animal_scene.instantiate()
 		add_child(animal)
 		animal.global_position = Vector3(
-			randf_range(0, 64), 1.5, randf_range(0, 64)
+			randf_range(0, World.grid_width), 1.5, randf_range(0, World.grid_depth)
 		)
 	for i in range(fox_spawn_count):
 		var animal := fox_animal_scene.instantiate()

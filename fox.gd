@@ -41,18 +41,15 @@ func _update_state(delta: float) -> void:
 	
 	match current_state:
 		State.WANDER:
-			if hunger > 0.8:
+			if hunger > 0.5:
 				current_state = State.HUNT
-			elif global_position.distance_to(target_position) < 0.5:
+			elif global_position.distance_to(target_position) < 0.2:
 				_pick_new_wander_target()
-		State.EAT:
-			hunger = max(0.0, hunger - delta * 0.5)
-			if hunger < 0.2:
-				current_state = State.WANDER
+
 		State.HUNT:
-			if global_position.distance_to(target_position) < 0.5:
+			if global_position.distance_to(target_position) < 0.2:
 				_pick_new_wander_target()
-			if hunger < 0.8:
+			if hunger < 0.5:
 				current_state = State.WANDER
 
 func _execute_state(_delta: float) -> void:
@@ -67,9 +64,27 @@ func _execute_state(_delta: float) -> void:
 				velocity = Vector3.ZERO
 		State.SLEEP, State.EAT:
 			velocity = Vector3.ZERO
+		State.HUNT:
+			if prey_dir.length() > 0.1:
+				velocity = prey_dir * (move_speed * 2)
+			else:
+				_pick_new_wander_target()
+			#else:
+			#	velocity = Vector3.ZERO
+			#	current_state = State.WANDER
 
-
-func _on_area_3d_body_entered(body: Node3D) -> void:
+var prey_dir : Vector3
+func _on_visibility_entered(body: Node3D) -> void:
 	if body.is_in_group("prey"):
-		print("rabbit")
+		#print("rabbit")
+		prey_dir = body.global_position.normalized()
+		current_state = State.HUNT
+	pass # Replace with function body.
+	
+
+
+func _on_attack_radius_body_entered(body: Node3D) -> void:
+	if body.is_in_group("prey"):
+		hunger = 0
+		body.die()
 	pass # Replace with function body.

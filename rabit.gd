@@ -12,6 +12,8 @@ var next_cell := Vector2i.ZERO
 enum State { WANDER, EAT, SLEEP, RUN }
 var current_state: State = State.WANDER
 
+var danger_dir := Vector3.ZERO
+
 func _ready() -> void:
 	_pick_new_wander_target()
 	
@@ -51,6 +53,12 @@ func _update_state(delta: float) -> void:
 			hunger = max(0.0, hunger - delta * 0.5)
 			if hunger < 0.2:
 				current_state = State.WANDER
+		State.RUN:
+			if hunger > 0.9:
+				current_state = State.WANDER
+			elif global_position.distance_to(target_position) < 0.5:
+				current_state = State.WANDER
+				_pick_new_wander_target()
 				
 func _execute_state(_delta: float) -> void:
 	match current_state:
@@ -64,3 +72,23 @@ func _execute_state(_delta: float) -> void:
 				velocity = Vector3.ZERO
 		State.SLEEP, State.EAT:
 			velocity = Vector3.ZERO
+		State.RUN:
+			#print("run")
+			danger_dir.x *= -1
+			danger_dir.z *= -1
+			velocity = danger_dir * (move_speed * 2)
+			
+
+
+func _on_area_3d_body_entered(body: Node3D) -> void:
+	if body.is_in_group("predator"):
+		#print("fox")
+		danger_dir = body.global_position.normalized()
+		current_state = State.RUN
+	pass # Replace with function body.
+	
+	
+	
+func die():
+	queue_free()
+	pass

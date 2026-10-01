@@ -4,7 +4,7 @@
 [ext_resource type="MeshLibrary" uid="uid://c4bg7h3acbyqq" path="res://tile_mesh_library.tres" id="1_u52ul"]
 [ext_resource type="PackedScene" uid="uid://bywkl4jpwrobu" path="res://player.tscn" id="2_vonw3"]
 
-[node name="Node3D" type="Node3D" unique_id=353086266]
+[node name="level" type="Node3D" unique_id=353086266]
 script = ExtResource("1_oi3di")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=547671422]

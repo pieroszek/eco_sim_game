@@ -3,7 +3,8 @@ extends CharacterBody3D
 @export var move_speed: float = 2.0
 @export var hunger_rate: float = 0.2
 
-@onready var Sight := $Area3D
+@onready var Sight := $Visibility
+@onready var Attack_radius := $Attack_radius
 
 var hunger: float = randf()
 var target_position: Vector3

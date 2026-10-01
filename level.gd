@@ -14,6 +14,7 @@ const rabbit_animal_scene := preload("res://rabit.tscn")
 const fox_animal_scene := preload("res://fox.tscn")
 @export var rabbit_spawn_count: int = 10
 @export var fox_spawn_count: int = 1
+@export var tree_density: float = 0.45
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	moisture_noise.seed = randi()  # or a fixed seed for reproducibility
@@ -25,11 +26,21 @@ func _ready() -> void:
 	World.grid_depth = depth
 	World.grid_width = width
 	spawn_animals()
+	generate_plants()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	pass
 	
+	
+func generate_plants():
+	for x in range(width):
+		for z in range(depth):
+			var coord := Vector2i(x, z)
+			var noise_value := moisture_noise.get_noise_2d(float(x), float(z))
+			if (noise_value + 1 ) * 0.5  <= tree_density:
+				World.spawn_plant("oak", coord)
+	pass
 func generate_world():
 	
 	for x in range(width):
@@ -44,7 +55,9 @@ func generate_world():
 				"moisture": moisture
 			}
 			World.tile_data[coord] = data
-			
+			var tree_vector : Vector2i = coord
+			#if moisture >= 0.2 and moisture <= 0.6 :
+			World.spawn_plant("oak", tree_vector)
 			# Sync the visual to the initial data
 			_update_visual(coord)
 			

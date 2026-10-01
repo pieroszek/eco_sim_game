@@ -5,11 +5,13 @@ const item_grass := 2
 const item_dirt := 3
 const item_sand := 4
 
-
+#@export var tree_scene: PackedScene
+const tree_scene := preload("res://tree.glb")
 var tile_data: Dictionary = {}
 var plant_data: Dictionary = {}
 var grid_map: GridMap
 
+var last_plant_id : int = 0
 class PlantData:
 	var id: int
 	var species: String        # "oak", "pine", "bush"
@@ -50,4 +52,20 @@ func spawn_plant(species: String, cell: Vector2i) -> void:
 	if get_biome(cell) == item_water:
 		return  # no trees on water
 	
+	var data := PlantData.new()
+	data.id = last_plant_id + 1
+	last_plant_id += 1
+	data.species = species
+	data.cell = cell
+	data.age = randf_range(1,5)
+	data.health = randf_range(0,1)
+	data.position = grid_map.map_to_local(Vector3i(cell.x, 1.5, cell.y)) + Vector3(randf_range(-0.3, 0.3), 0, randf_range(-0.3, 0.3)) 
+	data.position = grid_map.to_global(data.position)
+	plant_data[data.id] = data
+	_spawn_plant_mesh(data)
 	
+func _spawn_plant_mesh(data: PlantData) -> void:
+	var mesh := tree_scene.instantiate()
+	add_child(mesh)
+	mesh.global_position = data.position
+	data.mesh_instance = mesh
